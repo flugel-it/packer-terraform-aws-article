@@ -1,0 +1,49 @@
+{
+    "variables": {
+        "ami_name_prefix": "{{env `AMI_NAME_PREFIX`}}"
+    },
+    "builders": [{
+        "ami_description": "An AMI with HTTP benchmarking tools, based on Ubuntu.",
+        "ami_name": "{{user `ami_name_prefix`}}-{{isotime | clean_resource_name}}",
+        "instance_type": "t2.micro",
+        "region": "{{user `region`}}",
+        "source_ami_filter": {
+            "filters": {
+                "architecture": "x86_64",
+                "block-device-mapping.volume-type": "gp2",
+                "name": "*ubuntu-bionic-18.04-amd64-server-*",
+                "root-device-type": "ebs",
+                "virtualization-type": "hvm"
+            },
+            "most_recent": true,
+            "owners": [
+                "099720109477"
+            ]
+        },
+        "ssh_username": "ubuntu",
+        "type": "amazon-ebs",
+        "ami_groups": [
+            "all"
+        ]
+    }],
+    "provisioners": [{
+            "inline": [
+                "echo 'Sleeping for 30 seconds to give Ubuntu enough time to initialize (otherwise, packages may fail to install).'",
+                "sleep 30",
+                "sudo apt-get update"
+            ],
+            "type": "shell"
+        },
+        {
+            "type": "file",
+            "source": "{{template_dir}}/urls.txt",
+            "destination": "/home/ubuntu/urls.txt"
+        },
+        {
+            "scripts": [
+                "{{template_dir}}/install-tools.sh"
+            ],
+            "type": "shell"
+        }
+    ]
+}
