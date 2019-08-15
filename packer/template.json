@@ -21,29 +21,7 @@
             ]
         },
         "ssh_username": "ubuntu",
-        "type": "amazon-ebs",
-        "ami_groups": [
-            "all"
-        ]
-    }],
-    "provisioners": [{
-            "inline": [
-                "echo 'Sleeping for 30 seconds to give Ubuntu enough time to initialize (otherwise, packages may fail to install).'",
-                "sleep 30",
-                "sudo apt-get update"
-            ],
-            "type": "shell"
-        },
-        {
-            "type": "file",
-            "source": "{{template_dir}}/urls.txt",
-            "destination": "/home/ubuntu/urls.txt"
-        },
-        {
-            "scripts": [
-                "{{template_dir}}/install-tools.sh"
-            ],
-            "type": "shell"
-        }
-    ]
+        "type": "amazon-ebs"
+    }]
+
 }

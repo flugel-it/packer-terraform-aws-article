@@ -1,1 +1,6 @@
-https://example.com/products
+https://example.com/
+https://example.com/categories
+https://example.com/login
+https://example.com/productA
+https://example.com/productB
+https://example.com/productC
