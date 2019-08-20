@@ -1,0 +1,5 @@
+ami_name_filter = "http-benchmarking-*"
+instance_type = "t2.medium"
+keypair = "miguel_test"
+allow_ssh_from_cidrs = ["190.18.32.44/32"]
+tag_name = "MyTerraformProvisionedInfra"
